@@ -111,6 +111,15 @@ function viewAllUsers(){
     }
 
 }
+//If a user is not signed in, then navigate to the login screen
+var user = firebase.auth().currentUser;
+
+if (user) {
+  // User is signed in.
+} else {
+  location.assign("login.html");
+}
+
 //Invite Competitors (max 3)
 function chooseCompetitors(){
 
