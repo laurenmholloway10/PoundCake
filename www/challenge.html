@@ -44,6 +44,9 @@
                 <input id="buyIn" type="number" placeholder="Buy-In Amount" min="20" max="200" step="10">
                 <input id="weeksDuration" type="number" placeholder="Weeks" min="1" max="5" step="1">
                 <input id="lbsPerWeek" type="number" placeholder="LBS/Week" min="1" max="2" step="1">
+                <input id="opp1" type="email" placeholder="Enter Opponent #1 Email" required="true">
+                <input id="opp2" type="email" placeholder="Enter Opponent #2 Email (Optional)">
+                <input id="opp3" type="email" placeholder="Enter Opponent #3 Email (Optional)">
                 <button class="btn btn-positive btn-block" onclick="writeNewChallenge()">Invite Friends</button>
             </form>
         </div>
@@ -86,8 +89,7 @@
   firebase.initializeApp(config);
 </script>
 
-        <!--Cordova and Ratchet scripts-->
-        <script type="text/javascript" src="cordova.js"></script>
+        <!--Ratchet scripts-->
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
