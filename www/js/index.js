@@ -112,9 +112,7 @@ function WriteNewPlayer(){
 //Sign in the user if the user is registered
 function userSignIn(){
     var email = document.getElementById("email").value;
-    alert(email);
     var password = document.getElementById("password").value;
-    alert(password);
     firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(function(error) {
   // Handle Errors here.
@@ -179,15 +177,20 @@ function ToggleIndexMessage(){
 query.once("value")
   .then(function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-      // key will be "ada" the first time and "alan" the second time
       var playerId = childSnapshot.key;
-      var thisPlayerEmail = childSnapshot.child("email").val(); // "Ada"
+      var thisPlayerEmail = childSnapshot.child("email").val(); 
       if(player == thisPlayerEmail){
           if (childSnapshot.child("status").val() == "green") {
-              document.getElementById("challengeMessage").innerHTML = "You're not in a challenge"
+              document.getElementById("challengeMessage").innerHTML = "You're not in a challenge.";
+          }
+          else if(childSnapshot.child("status").val() == "yellow"){
+              document.getElementById("challengeMessage").innerHTML = "A challenge awaits!";
+          }
+          else if(childSnapshot.child("status").val() == "red"){
+              document.getElementById("challengeMessage").innerHTML = "Time Remaining";
           }
           else{
-              alert("nope!");
+              alert("Whoops! Something went wrong.");
           }
       }
   });
