@@ -172,4 +172,18 @@ function writeNewChallenge() {
 //Change Index to suggest creating challenge if user status if green
 function ToggleIndexMessage(){
     var user = firebase.auth().currentUser;
+    var player = user.email;
+
+    //start foreach loop
+    var query = firebase.database().ref("players").orderByKey();
+query.once("value")
+  .then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      // key will be "ada" the first time and "alan" the second time
+      var playerId = childSnapshot.key;
+      //
+      var thisPlayerEmail = snapshot.child("playerId/email").val();
+      alert(thisPlayerEmail);
+  });
+});
 }
