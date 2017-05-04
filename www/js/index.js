@@ -181,9 +181,15 @@ query.once("value")
     snapshot.forEach(function(childSnapshot) {
       // key will be "ada" the first time and "alan" the second time
       var playerId = childSnapshot.key;
-      //
-      var thisPlayerEmail = snapshot.child("playerId/email").val();
-      alert(thisPlayerEmail);
+      var thisPlayerEmail = childSnapshot.child("email").val(); // "Ada"
+      if(player == thisPlayerEmail){
+          if (childSnapshot.child("status").val() == "green") {
+              document.getElementById("challengeMessage").innerHTML = "You're not in a challenge"
+          }
+          else{
+              alert("nope!");
+          }
+      }
   });
 });
 }
