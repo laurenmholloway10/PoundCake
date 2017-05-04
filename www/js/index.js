@@ -81,6 +81,14 @@ function handleSignUp() {
     }
 
 //if user is not authenticated, then location.assign("https://www.w3schools.com");
+function redirectNonUser(){
+    var user = firebase.auth().currentUser;
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+    window.location.assign("login.html");
+    }
+    });
+}
 
 
 //Firebase database Functions
@@ -103,11 +111,12 @@ function WriteNewPlayer(){
 
 //Sign in the user if the user is registered
 function userSignIn(){
-    var email = document.getElementById('Lemail').value;
-    var password = document.getElementById('Lpassword').value;
-firebase.auth().signInWithEmailAndPassword(email, password)
+    var email = document.getElementById("email").value;
+    alert(email);
+    var password = document.getElementById("password").value;
+    alert(password);
+    firebase.auth().signInWithEmailAndPassword(email, password)
     .catch(function(error) {
-
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
@@ -118,35 +127,16 @@ firebase.auth().signInWithEmailAndPassword(email, password)
   }
   console.log(error);
 });
-var user = firebase.auth().currentUser;
 
+    //redirect on success
+    var user = firebase.auth().currentUser;
+    firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    window.location.replace("index.html");
+  }
+});
 }
-//If a user is not signed in, then navigate to the login screen
 
-
-/*while(!user){
-    location.assign("login.html");
-    break;
-}*/
-/*if (user) {
-  // User is signed in.
-} else {
-  location.assign("login.html");
-
-}*/
-
-//Invite Competitors (max 3)
-/*function getAllUsers(){
-    var allUsers = poundcakeDatabase.ref('players/');
-    return allUsers.once('value').then(function(snapshot) {
-        var userFirst = snapshot.val().firstName;
-        var userLast = snapshot.val().lastName;
-        var userFullName = userFirst + " " + userLast;
-        for (var player in allUsers) {
-            alert(userFullName);
-        }
-    });
-}*/
 function userSignOut(){
     firebase.auth().signOut().then(function() {
   // Sign-out successful.
@@ -154,33 +144,6 @@ function userSignOut(){
   alert("Whoops...My bad!");
 });
 }
-
-//function to redirect user to accept or decline challenge screen
-var challenges = poundcakeDatabase.ref("challenges");
-var Hostuser = firebase.auth().currentUser;
-if(Hostuser != null){
-    challenges.once("value")
-      .then(function(snapshot) {
-        var challenger = snapshot.val();
-        if(Hostuser.email == challenger.player1){
-            location.assign("InviteFriends.html");
-        }
-        else if (Hostuser.email == challenger.player2){
-            location.assign("InviteFriends.html");
-        }
-        else if (Hostuser.email == challenger.player3){
-            location.assign("InviteFriends.html");
-        }
-        else if (Hostuser.email == challenger.hostPlayer) {
-            location.assign("waitingOnInvites.html");
-        }
-        else {
-            //Do Nothing
-            alert("New friends, new money!");
-        }
-      });
-}
-
 
 function writeNewChallenge() {
     var challengeName = document.getElementById("challengeName").value;
@@ -204,4 +167,9 @@ function writeNewChallenge() {
     player3: opponent3,
     status: false
   });
+}
+
+//Change Index to suggest creating challenge if user status if green
+function ToggleIndexMessage(){
+    var user = firebase.auth().currentUser;
 }
